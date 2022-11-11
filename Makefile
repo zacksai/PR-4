@@ -18,7 +18,7 @@ digitblob.o: digitblob.cpp digitblob.h
 	$(CXX) $(CXXFLAGS) $(DEFS) -c $< -o $@
 
 
-bigint.o: bigint.cpp bigint.h 
+bigint.o: bigint.cpp bigint.h
 	$(CXX) $(CXXFLAGS) $(DEFS) -c $< -o $@
 
 
