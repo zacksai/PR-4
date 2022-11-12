@@ -211,20 +211,27 @@ BigInt BigInt::operator-(const BigInt &rhs) const {
 }
 */
 bool BigInt::operator<(const BigInt &rhs) const {
+
+    // copy current item into temporary variable
     BigInt temp = *this;
+
+    // check size difference
     if (temp.items_.size() < rhs.items_.size()){
         return true;
     } else if (temp.items_.size() > rhs.items_.size()){
         return false;
     } else{
-        // iterate through equal sized bigints
+
+        // for equal size, iterate from MSB to LSB
         for (unsigned int i = 0; i < temp.items_.size(); ++i) {
 
+            // store MSB position
+            unsigned int val = temp.items_.size() - i - 1;
+
             // compare and return appropriately
-            if (temp.items_[0] < rhs.items_[0]) {
+            if (temp.items_[val] < rhs.items_[val]) {
                 return true;
-            }
-            else if (temp.items_[0] > rhs.items_[0]) {
+            } else if (temp.items_[val] > rhs.items_[val]) {
                 return false;
             }
         }
@@ -234,14 +241,17 @@ bool BigInt::operator<(const BigInt &rhs) const {
     return false;
 }
 
+BigInt BigInt::operator-(const BigInt &rhs) const {
+    return rhs;
+}
+
+
 int main() {
-    BigInt b1("0");
-    cout << b1.to_string() << endl; // should print 0
-    BigInt b2("00");
-    cout << b2.to_string() << endl; // should print 0
-    BigInt b3("007");
-    cout << b3.to_string() << endl; // should print 7
-    BigInt b4("103"), b5("100");
-    cout << (b4 < b5) << endl; // should print 203
+
+    BigInt b1("700"), b2("900");
+    cout << b1.to_string() << " < " << b2.to_string() << endl;
+    cout << (b1 < b2) << endl; // should print 203
+
+
     return 0;
 }
