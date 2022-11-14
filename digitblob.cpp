@@ -58,7 +58,7 @@ void DigitBlob::classify() {
     // TO DO: use the results of helper functions to calculate features
     //    We suggest starting with the Euler number, but you are free to
     //    change our structure
-
+    if (euler_ == -1) digit_ = '8';
 
 
 }
@@ -127,8 +127,8 @@ void DigitBlob::calc_bit_quads() {
 
             // tally black pixels
             int n = 0;
-            for (bool i: bl) {
-                if (i) n++;
+            for (int i = 0; i < 4; ++i) {
+                if (bl[i]) n++;
             }
 
             // increment bit quads based on number of black pixels
