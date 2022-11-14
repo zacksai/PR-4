@@ -59,7 +59,6 @@ public:
      *
      */
     DigitBlob(uint8_t** img, Location upperleft, int height, int width);
-
     /**
      * @brief Destroy the Digit Blob object
      *

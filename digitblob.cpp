@@ -37,7 +37,9 @@ DigitBlob::DigitBlob(uint8_t** img, Location upperleft, int height, int width)
     euler_ = -2;
 
     // Initilaize ul_, h_ and w_ and any other data members
-
+    ul_ = upperleft;
+    h_ = height;
+    w_ = width;
 
 }
 
