@@ -22,12 +22,13 @@ int main(int argc, char *argv[])
 
   // ===================
   // TO DO: Fill in the arguments to the constructors below
-  NumImg img1(/* TO DO: fill me in */);
-  NumImg img2(/* TO DO: fill me in */);
+  NumImg img1(argv[1]);
+  NumImg img2(argv[2]);
 
   // ===================
   // TO DO: call findAndCreateDigitBlobs on each img 
-
+  img1.findAndCreateDigitBlobs();
+  img2.findAndCreateDigitBlobs();
 
   // ===================
   // Complete - Do not alter

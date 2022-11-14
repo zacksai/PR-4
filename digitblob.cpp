@@ -8,7 +8,8 @@ using namespace std;
 // TO DO - Complete this function
 bool Location::operator<(const Location& other) const
 {
-
+    // return true if lhs col is < other col
+    return col < other.col;
 
 }
 
@@ -23,7 +24,8 @@ DigitBlob::DigitBlob()
     // ul_'s Location default constructor already initializes it to -1,-1
 
     // Initilaize h_ and w_ and any other data members
-
+    h_ = w_ = 0;
+    digit_ = 'Z';
 
 }
 

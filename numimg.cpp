@@ -193,7 +193,7 @@ DigitBlob NumImg::createDigitBlob(bool **explored, int pr, int pc) {
                 explored[r][c] = true;
 
                 // add this neighbor to the queue to continue searching
-                q.emplace_back(r, c);
+                q.push_back(Location(r, c));
 
                 // update width, height if necessary
                 if (c > width) width = c;
@@ -208,7 +208,7 @@ DigitBlob NumImg::createDigitBlob(bool **explored, int pr, int pc) {
     }
 
     // Return new DigitBlob with initialized values
-    return {img_, Location(pc, pr), height, width};
+    return DigitBlob(img_, Location(pc, pr), height, width);
 
 }
 
