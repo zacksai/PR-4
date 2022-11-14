@@ -13,7 +13,6 @@ NumImg::NumImg(const char *bmp_filename) {
     //  Note: readGSBMP dynamically allocates a 2D array 
     //    (i.e. array of pointers (1 per row/height) where each  
     //    point to an array of unsigned char (uint8_t) pixels)
-
     // TO DO:
     // call readGSBMP to initialize img_, h_, and w_;
     img_ = readGSBMP(bmp_filename, h_, w_);
@@ -33,13 +32,11 @@ NumImg::NumImg(const char *bmp_filename) {
             }
         }
     }
-    // Perform any other initialization you need
 }
 
 // TO DO: Complete this function
 NumImg::~NumImg() {
     // Add code here if necessary
-
 
 }
 
@@ -50,9 +47,16 @@ size_t NumImg::findAndCreateDigitBlobs() {
     size_t num_found = 0;
 
     // create explored array
-    bool** expl = new bool*[w_];
+    bool **expl = new bool *[w_];
     for (int i = 0; i < w_; ++i) {
         expl[i] = new bool[h_];
+    }
+
+    // initialize boolean array
+    for (int i = 0; i < w_; ++i) {
+        for (int j = 0; j < h_; ++j) {
+            expl[i][j] = false;
+        }
     }
 
     // 0 = black, 255 = white
@@ -60,29 +64,35 @@ size_t NumImg::findAndCreateDigitBlobs() {
     for (int i = 0; i < h_; ++i) { // rows
         for (int j = 0; j < w_; ++j) { // columns
 
-            if (img_[i][j] == 0) { // black pixel found
+            // black pixel found
+            if (img_[i][j] == 0) {
+
                 // Mark pixel as explored, create digit blob
                 expl[i][j] = true;
                 DigitBlob temp = createDigitBlob(expl, i, j);
 
-                // add blob to blobs vector, update i, j, and num_found
-                blobs_.push_back(temp);
-                i+=temp.getWidth();
-                j+=temp.getHeight();
-                num_found++;
+                // handle stray pixels
+                if (temp.getHeight() > 1 || temp.getWidth() > 1) {
+
+                    // add blob to blobs vector, update i, j, and num_found
+                    blobs_.push_back(temp);
+                    i = temp.getUpperLeft().row + temp.getHeight();
+                    j = temp.getUpperLeft().col + temp.getWidth();
+                    num_found++;
+                }
             }
         }
     }
 
     // sort digit blobs
-    sortDigitBlobs();
+    // sortDigitBlobs();
 
 
     // deallocate memory
     for (int i = 0; i < w_; ++i) {
-        delete [] expl[i];
+        delete[] expl[i];
     }
-    delete [] expl;
+    delete[] expl;
 
     // return # blobs found
     return num_found;
@@ -130,7 +140,7 @@ size_t NumImg::numDigitBlobs() const {
 
 // Complete - Do not alter
 void NumImg::sortDigitBlobs() {
-    std::sort(blobs_.begin(), blobs_.end());
+    // std::sort(blobs_.begin(), blobs_.end());
 }
 
 // Complete - Do not alter
@@ -163,8 +173,8 @@ DigitBlob NumImg::createDigitBlob(bool **explored, int pr, int pc) {
 
     // Add your code here
 
-    // Store width and height
-    int width = 0, height = 0;
+    // Store width and height variables
+    int maxC = pc, minC = pc, maxR = pr, minR = pr;
 
     // store first location to search using top row and column
     Location curr = Location(pr, pc);
@@ -195,9 +205,11 @@ DigitBlob NumImg::createDigitBlob(bool **explored, int pr, int pc) {
                 // add this neighbor to the queue to continue searching
                 q.push_back(Location(r, c));
 
-                // update width, height if necessary
-                if (c > width) width = c;
-                if (r > height) height = r;
+                // update widths and heights if nec
+                if (r < minR) minR = r;
+                if (r > maxR) maxR = r;
+                if (c < minC) minC = c;
+                if (c > maxC) maxC = c;
             }
 
         } // repeat for all 8 neighbors
@@ -208,35 +220,6 @@ DigitBlob NumImg::createDigitBlob(bool **explored, int pr, int pc) {
     }
 
     // Return new DigitBlob with initialized values
-    return DigitBlob(img_, Location(pc, pr), height, width);
+    return DigitBlob(img_, Location(minR, minC), maxR - minR + 1, maxC - minC + 1);
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

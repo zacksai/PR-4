@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
   NumImg img2(argv[2]);
 
   // ===================
-  // TO DO: call findAndCreateDigitBlobs on each img 
+  // TO DO: call findAndCreateDigitBlobs on each img
   img1.findAndCreateDigitBlobs();
   img2.findAndCreateDigitBlobs();
 
@@ -68,20 +68,20 @@ int main(int argc, char *argv[])
     // Complete - Do not alter - Default full implementation
     string str1 = img1.classify(false);
     string str2 = img2.classify(false);
-    
+
     BigInt num1(str1);
     BigInt num2(str2);
     BigInt sum = num1 + num2;
-    cout << num1.to_string() << " + " << num2.to_string() 
+    cout << num1.to_string() << " + " << num2.to_string()
           << " = " << sum.to_string() << endl;
     if(num1 < num2){
       BigInt diff = num2 - num1;
-      cout << num2.to_string() << " - " << num1.to_string() 
+      cout << num2.to_string() << " - " << num1.to_string()
             << " = " << diff.to_string() << endl;
     }
     else {
       BigInt diff = num1 - num2;
-      cout << num1.to_string() << " - " << num2.to_string() 
+      cout << num1.to_string() << " - " << num2.to_string()
             << " = " << diff.to_string() << endl;
     }
   }
